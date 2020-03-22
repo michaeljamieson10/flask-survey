@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- <link rel="stylesheet" type="text/css" href="static/style.css" /> -->
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">Homie</a>
+        <a href="/form">Greet V1</a>
+        <a href="/form-2">Greet V2</a>
+        <a href="/lucky">lucky</a>
+        <a href="/hello">hello</a>
+        <a href="/goodbye">goodbye</a>
+    </nav>
+    <main id="container">
+        {%  block content %}  {% endblock %}
+    </main>
+    <!-- <script src="{{ url_for('static', filename='style.js') }}"></script> -->
+    <!-- <script src="/static/style.js"></script> -->
+</body>
+</html>

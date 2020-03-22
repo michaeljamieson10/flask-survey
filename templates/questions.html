@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{%  block content %} 
+    <h1>my quesions template</h1>
+    {% for msg in get_flashed_messages() %}
+        <p>{{ msg }}</p>
+        {% endfor %}
+    <h1>{{questions_question}}</h1>
+    <form action="/answer" method="POST">
+        {% for var in questions_choices %}
+            <p>
+                <strong><label for="{{var}}">{{var}}: </label> </strong>
+                <input id="{{var}}" type="radio" name="yesorno" value="{{var}}">
+            </p>
+        {% endfor %}
+            <p>
+                <button>Submit!</button>
+            </p>
+    </form>
+{% endblock %}
+
+<!-- <form action="/movies/new" method="POST">
+    <input type="text" placeholder="movie title" name="title">
+    
+    <button>
+        Submit
+    </button>
+</form> -->
+<!-- 
+<form action="/questions/{{id + 1}}" method="POST">
+    {% for var in questions_choices %}
+        <p>
+            <strong><label for="{{var}}">{{var}}: </label> </strong>
+            <input id="{{var}}" type="radio" name="yesorno" value="{{var}}">
+        </p>
+    {% endfor %}
+        <p>
+            <button>Submit!</button>
+        </p>
+</form> -->
+
