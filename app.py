@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, flash, jsonify
+from flask import Flask, request, render_template, redirect, flash, jsonify, session
 from flask_debugtoolbar import DebugToolbarExtension
 from random import randint, choice, sample
 import surveys
@@ -9,7 +9,8 @@ app.debug = True
 app.config['SECRET_KEY'] = "password"
 debug = DebugToolbarExtension(app)
 
-responses = []
+# session["responses"] = []
+# responses = []
 ind = 0 
 # for i in range(len(surveys.satisfaction_survey.questions)):
     # print(surveys.satisfaction_survey.questions[i].question)
@@ -19,14 +20,17 @@ def home_page():
     survey_title = surveys.satisfaction_survey.title
     survey_instructions = surveys.satisfaction_survey.instructions
     ind = 0
-    responses.clear()
+    # responses.clear()
     return render_template("home.html", survey_title=survey_title, survey_instructions=survey_instructions)
 
-
+@app.route("/post", methods=["POST"])
+def post_page():
+    session["responses"] = []
+    return redirect("/questions/0")
 @app.route('/questions/<int:ind>', methods=["POST","GET"])
 def question_page(ind):
-    # print(surveys.satisfaction_survey.questions[ind].question)
-    # print(len(surveys.satisfaction_survey.questions),"LENGTH OF SURVEY QUESTIONS")
+    responses = session["responses"]
+
     if ind != len(responses):
         flash('invalid question you have been redirected to your most up to date question' )
         return redirect(f"/questions/{len(responses)}")
@@ -39,20 +43,12 @@ def question_page(ind):
 @app.route('/answer', methods=["POST","GET"])
 def answer_page():
     answer = request.form['yesorno']
+
+    responses = session["responses"]
     responses.append(answer)
+    session["responses"] = responses
+
     print(responses)
     return redirect(f"/questions/{len(responses)}")
 
 
-# @app.route('/movies/new', methods=["POST"])
-# def add_movie():
-#     title = request.form["title"]
-#     if title in MOVIES:
-#         flash('Movie exists', 'error')
-#     else:
-#         MOVIES.add(title)
-#         flash("Added!", 'success')
-    
-#     return redirect("/movies")
-
-    
